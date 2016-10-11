@@ -4,3 +4,5 @@ scikit-learn
 joblib
 Flask
 gunicorn
+celery[redis]
+gevent
