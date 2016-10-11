@@ -4,6 +4,30 @@ We trained a python model to classify whether or not a review is real or spam. N
 
 The model is stored in model as ```model.pkl```.
 
+# Version 2 - Celery
+
+Start the webserver:
+```
+gunicorn -w 1 -b 127.0.0.1:5000 -k gevent api:app
+```
+
+Start redis:
+```
+redis-server
+```
+
+Start celery worker
+```
+CELERY_WORKER=true celery worker -A predict_celery:celery -l DEBUG -c 1
+```
+
+## Benchmarks
+
+```bash
+ab -n 10 -p data.json -T application/json 127.0.0.1:5000/predict
+```
+~2.75 requests/s
+
 # Version 1.1 - Flask + gunicorn
 
 We can run flask using gunicorn and scale the number of workers.
@@ -11,6 +35,13 @@ We can run flask using gunicorn and scale the number of workers.
 ```bash
 gunicorn -w 3 -b :5000 api:app
 ```
+
+## Benchmarks
+```bash
+ab -n 10 -p data.json -T application/json 127.0.0.1:5000/predict
+```
+~1.0 requests/s
+
 
 ## Benchmarks
 ```bash
