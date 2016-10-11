@@ -1,0 +1,8 @@
+numpy
+scipy
+scikit-learn
+joblib
+Flask
+gunicorn
+celery[redis]
+gevent
