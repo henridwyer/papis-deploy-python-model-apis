@@ -1,0 +1,7 @@
+api_env/**
+env/**
+run/**
+*.pyc
+*.log
+.DS_Store
+dump.rdb
