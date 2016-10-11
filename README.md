@@ -4,6 +4,20 @@ We trained a python model to classify whether or not a review is real or spam. N
 
 The model is stored in model as ```model.pkl```.
 
+# Version 1.1 - Flask + gunicorn
+
+We can run flask using gunicorn and scale the number of workers.
+
+```bash
+gunicorn -w 3 -b :5000 api:app
+```
+
+## Benchmarks
+```bash
+ab -n 10 -p data.json -T application/json 127.0.0.1:5000/predict
+```
+~2.75 requests/s
+
 # Version 1 - Flask
 
 We can set up a flask server to serve the model.
@@ -26,9 +40,7 @@ How many predictions can our setup handle?
 Using Apache Bench:
 
 ```bash
-ab -n 10 -p data.json \
--T application/json \
-127.0.0.1:5000/predict
+ab -n 10 -p data.json -T application/json 127.0.0.1:5000/predict
 ```
 
 ```
